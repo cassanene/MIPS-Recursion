@@ -28,8 +28,9 @@ removeleadandtrail:
     beq $t2, 10, print #print after the string is done
     beq $t2, 32, skip #if the character is a space it will go to this label
     beq $t2, 9, skip
-    ble $s1, 57, countValid
-    # bge $s1, 88, countValid #goes to X
+    ble $s1, 58, countValidz9
+    ble $s1, 88, countValidup #goes to X
+    ble $s1, 120, countValidlow
     # ble $s1, 120, makenewstrng
 
 
@@ -44,15 +45,27 @@ invalid:
     la $a0, invalidInput
     syscall
 
-countValid:
+countValidz9:
+    ble $t2, 47, invalid
     addi $s0,$s0, 1
     addi $a0, $a0, 1 #move index
 
-    li $v0, 4
-    la $a0, testString
-    syscall
-
 j removeleadandtrail
+
+countValidup:
+    ble $t2, 64, invalid
+    addi $s0,$s0, 1
+    addi $a0, $a0, 1 #move index
+j removeleadandtrail
+
+countValidlow:
+    ble $t2, 96, invalid
+    bge $t2, 89, invalid
+    addi $s0,$s0, 1
+    addi $a0, $a0, 1 #move index
+j removeleadandtrail
+
+
 
 # print:
 #     li $v0, 4
