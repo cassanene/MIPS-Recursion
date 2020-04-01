@@ -110,3 +110,8 @@ validlow:
 j validityLoop
 
 
+recursion:
+    li $t5, 0
+    li $s2, 24 #base
+    li $s6, 0
+    la $s6, $a0
