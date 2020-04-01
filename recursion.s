@@ -76,39 +76,37 @@ beqz $t3, invalid
 li $s7, 0 #making a counter for the loop
 
 validityLoop:
-    beq $t4, $t3
+    beq $s7, $t3
     lb $a2, 0($s6)
     beq $a2, 9, invalid
     beq $a2, 32, invalid
-    
+    ble $a2, 58, validz9
+    ble $a2, 88, validup #goes to X
+    ble $a2, 120, validlow
+
 invalid:
     li $v0, 4
     la $a0, invalidInput
     syscall
 
-countValidz9:
+validz9:
     ble $t2, 47, invalid
-    addi $s0,$s0, 1
-    addi $a0, $a0, 1 #move index
+    addi $s6,$s6, 1
+    addi $s7, $s7, 1 #move index
 
-j removeleadandtrail
+j validityLoop
 
-countValidup:
+validup:
     ble $t2, 64, invalid
-    addi $s0,$s0, 1
-    addi $a0, $a0, 1 #move index
-j removeleadandtrail
+    addi $s6,$s6, 1
+    addi $s7, $s7, 1 #move index
+j validityLoop
 
-countValidlow:
+validlow:
     ble $t2, 96, invalid
     bge $t2, 89, invalid
-    addi $s0,$s0, 1
-    addi $a0, $a0, 1 #move index
-j removeleadandtrail
+    addi $s6,$s6, 1
+    addi $s7, $s7, 1 #move index
+j validityLoop
 
 
-
-# print:
-#     li $v0, 4
-#     la $a0, ($s3)
-#     syscall
