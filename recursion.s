@@ -24,22 +24,39 @@ main:
     li $s1, 0 #counter for the length before 
     li $s3, 0 #counter trailing
 
-
+    lb $t2, 0($a0)
 checkstringLength:
     beqz $a1, lengthCounted 
 	addi $t0, $t0, 1 
 	addi $a0, $a0, 1 
-	j checkstringLength 
+j checkstringLength 
 
 
-removeleadandtrail:
-    lb $t2, 0($a0)
-    beq $t2, 10, print #print after the string is done
-    beq $t2, 32, skip #if the character is a space it will go to this label
-    beq $t2, 9, skip
-    ble $t2, 58, countValidz9
-    ble $t2, 88, countValidup #goes to X
-    ble $t2, 120, countValidlow
+    li $t1, 0 #index of valid char
+    subu $t2,$t0,1 #index of last valud string
+    la $s6, $a0
+
+
+removeLead:
+    lb $t7,($s6) 
+	beq $s6, 9, skipLead 
+	beq $s6, 32, skipLead
+
+skipLead:
+    addi $t1, $t1, 1 
+	addi $s0, $s0, 1
+j skipLead 
+
+
+
+
+    # lb $t2, 0($a0)
+    # beq $t2, 10, print #print after the string is done
+    # beq $t2, 32, skip #if the character is a space it will go to this label
+    # beq $t2, 9, skip
+    # ble $t2, 58, countValidz9
+    # ble $t2, 88, countValidup #goes to X
+    # ble $t2, 120, countValidlow
 
 
 skip:
