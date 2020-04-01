@@ -71,8 +71,16 @@ trailFinish:
     addu $s6,$s6,$t1
 
 bgt $t3, 20, invalid
-beqz, $t3, invalid
+beqz $t3, invalid
 
+li $s7, 0 #making a counter for the loop
+
+validityLoop:
+    beq $t4, $t3
+    lb $a2, 0($s6)
+    beq $a2, 9, invalid
+    beq $a2, 32, invalid
+    
 invalid:
     li $v0, 4
     la $a0, invalidInput
