@@ -70,6 +70,9 @@ trailFinish:
     la $s6, $a0
     addu $s6,$s6,$t1
 
+bgt $t3, 20, invalid
+beqz, $t3, invalid
+
 invalid:
     li $v0, 4
     la $a0, invalidInput
