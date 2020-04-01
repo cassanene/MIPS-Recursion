@@ -47,6 +47,10 @@ skipLead:
 	addi $s6, $s6, 1
 j skipLead 
 
+leadFinish:
+    subu $s6,$s6,$t1 
+    addu $s6,$s6,$t2
+
 removeTrailing:
     lb $a3, ($s6) 
 	beq $a3, 9, skipTrail 
@@ -57,6 +61,12 @@ skipTrail:
 	addi $s6,$s6, -1
 j skipTrail
 
+trailFinish:
+    subu $t3,$t2,$t1 
+    addi $t3,$t3,1 
+    li $s6, 0 
+    la $s6, $a0
+    addu $s6,$s6,$t1
 
 invalid:
     li $v0, 4
