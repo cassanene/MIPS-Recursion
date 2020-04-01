@@ -44,26 +44,19 @@ removeLead:
 
 skipLead:
     addi $t1, $t1, 1 
-	addi $s0, $s0, 1
+	addi $s6, $s6, 1
 j skipLead 
 
+removeTrailing:
+    lb $a3, ($s6) 
+	beq $a3, 9, skipTrail 
+	beq $a3, 32, skipTrail 
 
+skipTrail:
+    addi $t2, $t2, -1
+	addi $s6,$s6, -1
+j skipTrail
 
-
-    # lb $t2, 0($a0)
-    # beq $t2, 10, print #print after the string is done
-    # beq $t2, 32, skip #if the character is a space it will go to this label
-    # beq $t2, 9, skip
-    # ble $t2, 58, countValidz9
-    # ble $t2, 88, countValidup #goes to X
-    # ble $t2, 120, countValidlow
-
-
-skip:
-    addi $s1, $s1, 1 #adding 1 to the number of tabs and spaces before
-    bge $s0, 1, invalid #counter for the length of the 
-
-j removeleadandtrail
 
 invalid:
     li $v0, 4
