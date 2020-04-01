@@ -39,6 +39,7 @@ j checkstringLength
 
 removeLead:
     lb $t7,($s6) 
+    bgt $s6, 32, leadFinish
 	beq $s6, 9, skipLead 
 	beq $s6, 32, skipLead
 
@@ -53,6 +54,7 @@ leadFinish:
 
 removeTrailing:
     lb $a3, ($s6) 
+    bgt $a3, 32, trailFinish
 	beq $a3, 9, skipTrail 
 	beq $a3, 32, skipTrail 
 
